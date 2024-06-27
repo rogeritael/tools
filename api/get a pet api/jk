@@ -1,0 +1,39 @@
+try{
+
+            if(!name){
+                res.status(422).json({message: 'O nome é obrigatório'});
+                return;
+            }
+            if(!email){
+                res.status(422).json({message: 'O email é obrigatório'});
+                return;
+            }
+            const userExists = await User.findOne({email: email});
+            if(user.email !== email && userExists){
+                res.status(422).json({message: 'Já existe um usuário cadastrado com este endereço de email'});
+                return;
+            }
+            if(!phone){
+                res.status(422).json({message: 'O telefone é obrigatório'});
+                return;
+            }
+
+            user.name = name;
+            user.email = email;
+            user.phone = phone; 
+
+            if(password !== confirmpassword){
+                res.status(422).json({message: 'As senhas não coicidem'});
+                return;
+            }else if(password === confirmpassword && password != null){
+                const salt = await bcrypt.genSalt(12);
+                const hashedPassword = await bcrypt.hash(hashedPassword, salt);
+
+                user.password = passwordHash;
+            }
+
+            console.log(user)
+            
+        }catch(e){
+            res.status(422).json({message: 'Usuário não encontrado'});
+        }
